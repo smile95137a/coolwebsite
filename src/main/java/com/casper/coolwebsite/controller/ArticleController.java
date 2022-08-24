@@ -6,9 +6,4 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ArticleController {
-
-    @Autowired
-    private ArticleService articleService;
-
-
 }
