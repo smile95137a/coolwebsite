@@ -1,24 +1,18 @@
-package com.casper.coolwebsite.model;
+package com.casper.coolwebsite.dto;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class article {
-    private Integer articleId;
+public class ArticleRequest {
+    @NotNull
     private Integer topicId;
+    @NotNull
     private String articleTitle;
+    @NotNull
     private String articleText;
+    @NotNull
     private String articleAuthor;
     private String imageUrl;
-    private Date createdDate;
-    private Date lastModifiedDate;
-
-    public Integer getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(Integer articleId) {
-        this.articleId = articleId;
-    }
 
     public Integer getTopicId() {
         return topicId;
@@ -58,21 +52,5 @@ public class article {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
     }
 }
