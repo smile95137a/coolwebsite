@@ -1,20 +1,20 @@
 package com.casper.coolwebsite.controller;
 
 import com.casper.coolwebsite.dto.ArticleRequest;
-import com.casper.coolwebsite.dto.CategoryRequest;
 import com.casper.coolwebsite.dto.WebsiteQueryParams;
 import com.casper.coolwebsite.model.Article;
-import com.casper.coolwebsite.model.Category;
-import com.casper.coolwebsite.model.Topic;
 import com.casper.coolwebsite.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
-
+@Validated
 @RestController
 public class ArticleController {
 
@@ -23,10 +23,21 @@ public class ArticleController {
 
     @GetMapping("/articles")
     public ResponseEntity<List<Article>> getArticles(
-            @RequestParam(required = false) String search
+            //查詢條件
+            @RequestParam(required = false) String search,
+            //排序
+            @RequestParam(defaultValue = "created_date") String orderBy,
+            @RequestParam(defaultValue = "desc") String sort,
+            //分頁
+            @RequestParam(defaultValue = "5") @Max(1000) @Min(0) Integer limit,
+            @RequestParam(defaultValue = "0") @Min(0) Integer offset
     ){
         WebsiteQueryParams websiteQueryParams = new WebsiteQueryParams();
         websiteQueryParams.setSearch(search);
+        websiteQueryParams.setOrderBy(orderBy);
+        websiteQueryParams.setSort(sort);
+        websiteQueryParams.setLimit(limit);
+        websiteQueryParams.setOffset(offset);
 
         List<Article> articleList = articleService.getArticles(websiteQueryParams);
 

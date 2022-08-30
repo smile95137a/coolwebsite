@@ -32,11 +32,18 @@ public class ArticleDaoImpl implements ArticleDao{
                       " WHERE 1=1";
 
         Map<String , Object> map = new HashMap<>();
-
+        //查詢條件
         if(websiteQueryParams.getSearch() != null){
             sql = sql + " AND article_title like :search";
             map.put("search" , "%" +websiteQueryParams.getSearch() + "%");
         }
+        //排序
+        sql = sql + " ORDER BY " + websiteQueryParams.getOrderBy() + " " + websiteQueryParams.getSort();
+
+        //分頁
+        sql = sql + " LIMIT :limit OFFSET :offset";
+        map.put("limit" , websiteQueryParams.getLimit());
+        map.put("offset" , websiteQueryParams.getOffset());
 
         List<Article> articleList = namedParameterJdbcTemplate.query(sql , map , new ArticleRowMapper());
 
