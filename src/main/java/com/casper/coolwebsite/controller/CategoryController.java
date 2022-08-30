@@ -37,4 +37,30 @@ public class CategoryController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(category);
     }
+
+    @PutMapping("/category/{categoryId}")
+    public ResponseEntity<Category> updateCategory(@PathVariable Integer categoryId,
+                                                   @RequestBody @Valid CategoryRequest categoryRequest){
+
+        //檢查category是否存在
+        Category category = categoryService.getCategoryById(categoryId);
+
+        if(category == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        //修改category的數據
+        categoryService.updateCategory(categoryId , categoryRequest);
+
+        Category updateCategory = categoryService.getCategoryById(categoryId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(updateCategory);
+    }
+
+    @DeleteMapping("/category/{categoryId}")
+    public ResponseEntity<?> deleteCategory(@PathVariable Integer categoryId){
+        categoryService.deleteCategoryById(categoryId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

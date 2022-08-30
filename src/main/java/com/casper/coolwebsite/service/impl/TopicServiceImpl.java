@@ -24,4 +24,14 @@ public class TopicServiceImpl implements TopicService{
         return topicDao.createdTopic(topicRequest);
     }
 
+    @Override
+    public void updateTopic(Integer topicId, TopicRequest topicRequest) {
+        topicDao.updateTopic(topicId , topicRequest);
+    }
+
+    @Override
+    public void deleteTopicById(Integer topicId) {
+        topicDao.deleteTopicById(topicId);
+    }
+
 }

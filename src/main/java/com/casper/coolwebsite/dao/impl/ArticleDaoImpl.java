@@ -2,7 +2,10 @@ package com.casper.coolwebsite.dao.impl;
 
 import com.casper.coolwebsite.dao.ArticleDao;
 import com.casper.coolwebsite.dto.ArticleRequest;
+import com.casper.coolwebsite.dto.WebsiteQueryParams;
 import com.casper.coolwebsite.model.Article;
+import com.casper.coolwebsite.model.Category;
+import com.casper.coolwebsite.model.Topic;
 import com.casper.coolwebsite.rowmapper.ArticleRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -22,6 +25,23 @@ public class ArticleDaoImpl implements ArticleDao{
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Override
+    public List<Article> getArticles(WebsiteQueryParams websiteQueryParams) {
+        String sql = "SELECT article_id , topic_id , article_title , article_text , article_author , article_image_url , created_date , last_modified_date FROM article" +
+                      " WHERE 1=1";
+
+        Map<String , Object> map = new HashMap<>();
+
+        if(websiteQueryParams.getSearch() != null){
+            sql = sql + " AND article_title like :search";
+            map.put("search" , "%" +websiteQueryParams.getSearch() + "%");
+        }
+
+        List<Article> articleList = namedParameterJdbcTemplate.query(sql , map , new ArticleRowMapper());
+
+        return articleList;
+    }
 
     @Override
     public Article getArticleId(Integer articleId) {
@@ -50,7 +70,7 @@ public class ArticleDaoImpl implements ArticleDao{
         map.put("articleTitle" , articleRequest.getArticleTitle());
         map.put("articleText" , articleRequest.getArticleText());
         map.put("articleAuthor" , articleRequest.getArticleAuthor());
-        map.put("articleImageUrl" , articleRequest.getImageUrl());
+        map.put("articleImageUrl" , articleRequest.getArticleImageUrl());
 
         Date now = new Date();
         map.put("createdDate" , now);
@@ -62,5 +82,31 @@ public class ArticleDaoImpl implements ArticleDao{
 
         int articleId = keyHolder.getKey().intValue();
         return articleId;
+    }
+
+    @Override
+    public void updateArticle(Integer articleId, ArticleRequest articleRequest) {
+        String sql = "UPDATE article SET topic_id = :topicId , article_title = :articleTitle , article_text = :articleText , article_author = :articleAuthor , article_image_url = :articleImageUrl , last_modified_date = :lastModifiedDate WHERE article_id = :articleId";
+
+        Map<String , Object> map = new HashMap<>();
+        map.put("topicId" , articleRequest.getTopicId());
+        map.put("articleTitle" , articleRequest.getArticleTitle());
+        map.put("articleText" , articleRequest.getArticleText());
+        map.put("articleAuthor" , articleRequest.getArticleAuthor());
+        map.put("articleImageUrl" , articleRequest.getArticleImageUrl());
+        map.put("lastModifiedDate" , new Date());
+        map.put("articleId" , articleId);
+
+        namedParameterJdbcTemplate.update(sql , map);
+    }
+
+    @Override
+    public void deleteArticleById(Integer articleId) {
+        String sql = "DELETE FROM article WHERE article_id = :articleId";
+
+        Map<String , Object> map = new HashMap<>();
+        map.put("articleId" , articleId);
+
+        namedParameterJdbcTemplate.update(sql , map);
     }
 }

@@ -37,4 +37,25 @@ public class TopicController {
         return ResponseEntity.status(HttpStatus.CREATED).body(topic);
     }
 
+    @PutMapping("/topic/{topicId}")
+    public ResponseEntity<Topic> updateTopic(@PathVariable Integer topicId , @RequestBody @Valid TopicRequest topicRequest){
+        Topic topic = topicService.getTopicById(topicId);
+        System.out.println(topicId);
+        if(topic == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        topicService.updateTopic(topicId , topicRequest);
+
+        Topic updateTopic = topicService.getTopicById(topicId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(updateTopic);
+    }
+
+    @DeleteMapping("/topic/{topicById}")
+    public ResponseEntity<?> deleteTopic(@PathVariable Integer topicId){
+        topicService.deleteTopicById(topicId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

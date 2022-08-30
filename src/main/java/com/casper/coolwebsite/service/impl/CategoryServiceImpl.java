@@ -22,4 +22,14 @@ public class CategoryServiceImpl implements CategoryService {
     public Integer createCategory(CategoryRequest categoryRequest) {
         return categoryDao.createCategory(categoryRequest);
     }
+
+    @Override
+    public void updateCategory(Integer categoryId, CategoryRequest categoryRequest) {
+        categoryDao.updateCategory(categoryId, categoryRequest);
+    }
+
+    @Override
+    public void deleteCategoryById(Integer categoryId) {
+        categoryDao.deleteCategoryById(categoryId);
+    }
 }

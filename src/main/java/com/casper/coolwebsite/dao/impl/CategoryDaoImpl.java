@@ -61,4 +61,29 @@ public class CategoryDaoImpl implements CategoryDao {
         int categoryId = keyHolder.getKey().intValue();
         return categoryId;
     }
+
+    @Override
+    public void updateCategory(Integer categoryId, CategoryRequest categoryRequest) {
+        String sql = "UPDATE category SET category_name = :categoryName , description = :description , last_modified_date = :lastModifiedDate WHERE category_id = :categoryId";
+
+        Map<String , Object> map = new HashMap<>();
+        map.put("categoryName" , categoryRequest.getCategoryName());
+        map.put("description" , categoryRequest.getDescription());
+
+        Date now = new Date();
+        map.put("lastModifiedDate" , now);
+        map.put("categoryId" , categoryId);
+
+        namedParameterJdbcTemplate.update(sql , map);
+    }
+
+    @Override
+    public void deleteCategoryById(Integer categoryId) {
+        String sql = "DELETE FROM category WHERE category_id = :categoryId";
+
+        Map<String , Object> map = new HashMap<>();
+        map.put("categoryId" , categoryId);
+
+        namedParameterJdbcTemplate.update(sql , map);
+    }
 }

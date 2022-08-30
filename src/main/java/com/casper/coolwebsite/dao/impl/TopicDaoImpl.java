@@ -63,4 +63,28 @@ public class TopicDaoImpl implements TopicDao{
 
         return topicId;
     }
+
+    @Override
+    public void updateTopic(Integer topicId, TopicRequest topicRequest) {
+        String sql = "UPDATE topic SET category_id = :categoryId , topic_name = :topicName , description = :description , last_modified_date = :lastModifiedDate WHERE topic_id = :topicId";
+
+        Map<String , Object> map = new HashMap<>();
+        map.put("categoryId" , topicRequest.getCategoryId());
+        map.put("topicName" , topicRequest.getTopicName());
+        map.put("description" , topicRequest.getDescription());
+        map.put("lastModifiedDate" , new Date());
+        map.put("topicId" , topicId);
+
+        namedParameterJdbcTemplate.update(sql , map);
+    }
+
+    @Override
+    public void deleteTopicById(Integer topicId) {
+        String sql = "DELETE FROM topic WHERE topic_id = :topicId";
+
+        Map<String , Object> map = new HashMap<>();
+        map.put("topicId" , topicId);
+
+        namedParameterJdbcTemplate.update(sql , map);
+    }
 }

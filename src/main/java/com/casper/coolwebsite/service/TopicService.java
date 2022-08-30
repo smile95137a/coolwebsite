@@ -7,6 +7,6 @@ public interface TopicService {
 
     Topic getTopicById(Integer topicId);
     Integer createdTopic(TopicRequest topicRequest);
-
-
+    void updateTopic(Integer topicId, TopicRequest topicRequest);
+    void deleteTopicById(Integer topicId);
 }

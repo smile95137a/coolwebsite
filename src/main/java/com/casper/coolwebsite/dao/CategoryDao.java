@@ -6,4 +6,6 @@ import com.casper.coolwebsite.model.Category;
 public interface CategoryDao {
     Category getCategoryById(Integer categoryId);
     Integer createCategory(CategoryRequest categoryRequest);
+    void updateCategory(Integer categoryId, CategoryRequest categoryRequest);
+    void deleteCategoryById(Integer categoryId);
 }

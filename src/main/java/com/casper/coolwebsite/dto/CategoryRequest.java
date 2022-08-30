@@ -2,6 +2,8 @@ package com.casper.coolwebsite.dto;
 
 import com.sun.istack.internal.NotNull;
 
+import java.util.Date;
+
 public class CategoryRequest {
     @NotNull
     private String categoryName;
@@ -22,4 +24,5 @@ public class CategoryRequest {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

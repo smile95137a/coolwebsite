@@ -12,7 +12,7 @@ public class ArticleRequest {
     private String articleText;
     @NotNull
     private String articleAuthor;
-    private String imageUrl;
+    private String articleImageUrl;
 
     public Integer getTopicId() {
         return topicId;
@@ -46,11 +46,11 @@ public class ArticleRequest {
         this.articleAuthor = articleAuthor;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getArticleImageUrl() {
+        return articleImageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setArticleImageUrl(String articleImageUrl) {
+        this.articleImageUrl = articleImageUrl;
     }
 }
