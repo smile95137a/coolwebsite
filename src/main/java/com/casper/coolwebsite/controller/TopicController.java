@@ -10,12 +10,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class TopicController {
 
     @Autowired
     private TopicService topicService;
+
+    @GetMapping("/topics")
+    public ResponseEntity<List<Topic>> getTopics(){
+        List<Topic> topicList = topicService.getTopics();
+        return ResponseEntity.status(HttpStatus.OK).body(topicList);
+    }
+
 
     @GetMapping("/topic/{topicId}")
     public ResponseEntity<Topic> getTopicById(@PathVariable Integer topicId){

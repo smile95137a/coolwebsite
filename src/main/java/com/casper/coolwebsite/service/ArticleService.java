@@ -12,4 +12,5 @@ public interface ArticleService {
     Integer createdArticle(ArticleRequest articleRequest);
     void updateArticle(Integer articleId, ArticleRequest articleRequest);
     void deleteArticleById(Integer articleId);
+    Integer countArticle(WebsiteQueryParams websiteQueryParams);
 }

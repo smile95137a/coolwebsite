@@ -4,6 +4,7 @@ import com.casper.coolwebsite.dto.ArticleRequest;
 import com.casper.coolwebsite.dto.WebsiteQueryParams;
 import com.casper.coolwebsite.model.Article;
 import com.casper.coolwebsite.service.ArticleService;
+import com.casper.coolwebsite.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class ArticleController {
     private ArticleService articleService;
 
     @GetMapping("/articles")
-    public ResponseEntity<List<Article>> getArticles(
+    public ResponseEntity<Page<Article>> getArticles(
             //查詢條件
             @RequestParam(required = false) String search,
             //排序
@@ -41,7 +42,15 @@ public class ArticleController {
 
         List<Article> articleList = articleService.getArticles(websiteQueryParams);
 
-        return ResponseEntity.status(HttpStatus.OK).body(articleList);
+        Integer total = articleService.countArticle(websiteQueryParams);
+
+        Page<Article> page = new Page<>();
+        page.setLimit(limit);
+        page.setOffset(offset);
+        page.setTotal(total);
+        page.setResult(articleList);
+
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
 

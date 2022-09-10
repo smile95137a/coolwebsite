@@ -7,6 +7,8 @@ import com.casper.coolwebsite.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class CategoryServiceImpl implements CategoryService {
 
@@ -31,5 +33,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategoryById(Integer categoryId) {
         categoryDao.deleteCategoryById(categoryId);
+    }
+
+    @Override
+    public List<Category> getCategory() {
+        return categoryDao.getCategory();
     }
 }

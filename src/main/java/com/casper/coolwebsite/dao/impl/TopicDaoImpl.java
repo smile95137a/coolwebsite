@@ -87,4 +87,12 @@ public class TopicDaoImpl implements TopicDao{
 
         namedParameterJdbcTemplate.update(sql , map);
     }
+
+    @Override
+    public List<Topic> getTopics() {
+        String sql = "SELECT topic_id , topic_name , category_id  , description FROM topic";
+        Map<String , Object> map = new HashMap<>();
+        List<Topic> topicList =  namedParameterJdbcTemplate.query(sql , map , new TopicRowMapper());
+        return topicList;
+    }
 }

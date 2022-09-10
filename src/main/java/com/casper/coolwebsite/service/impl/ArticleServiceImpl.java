@@ -41,5 +41,10 @@ public class ArticleServiceImpl implements ArticleService{
         articleDao.deleteArticleById(articleId);
     }
 
+    @Override
+    public Integer countArticle(WebsiteQueryParams websiteQueryParams) {
+        return articleDao.countArticle(websiteQueryParams);
+    }
+
 
 }

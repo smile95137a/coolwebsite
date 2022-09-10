@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -16,6 +17,14 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @GetMapping("/category")
+    public ResponseEntity<List<Category>> getCategory(){
+        List<Category> categoryList = categoryService.getCategory();
+
+        return ResponseEntity.status(HttpStatus.OK).body(categoryList);
+    }
+
 
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Integer categoryId){

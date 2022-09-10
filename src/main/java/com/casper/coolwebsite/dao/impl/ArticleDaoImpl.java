@@ -4,13 +4,10 @@ import com.casper.coolwebsite.dao.ArticleDao;
 import com.casper.coolwebsite.dto.ArticleRequest;
 import com.casper.coolwebsite.dto.WebsiteQueryParams;
 import com.casper.coolwebsite.model.Article;
-import com.casper.coolwebsite.model.Category;
-import com.casper.coolwebsite.model.Topic;
 import com.casper.coolwebsite.rowmapper.ArticleRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
@@ -115,5 +112,20 @@ public class ArticleDaoImpl implements ArticleDao{
         map.put("articleId" , articleId);
 
         namedParameterJdbcTemplate.update(sql , map);
+    }
+
+    @Override
+    public Integer countArticle(WebsiteQueryParams websiteQueryParams) {
+        String sql = "SELECT count(*) FROM article WHERE 1=1 ";
+        Map<String , Object> map = new HashMap<>();
+        //查詢條件
+        if(websiteQueryParams.getSearch() != null){
+            sql = sql + " AND article_title like :search";
+            map.put("search" , "%" +websiteQueryParams.getSearch() + "%");
+        }
+
+        Integer total = namedParameterJdbcTemplate.queryForObject(sql , map , Integer.class);
+
+        return total;
     }
 }

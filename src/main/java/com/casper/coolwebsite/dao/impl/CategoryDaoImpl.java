@@ -86,4 +86,12 @@ public class CategoryDaoImpl implements CategoryDao {
 
         namedParameterJdbcTemplate.update(sql , map);
     }
+
+    @Override
+    public List<Category> getCategory() {
+        String sql = "SELECT category_id , category_name FROM category";
+        Map<String , Object> map = new HashMap<>();
+        List<Category> categoryList = namedParameterJdbcTemplate.query(sql , map , new CategoryRowMapper());
+        return categoryList;
+    }
 }
