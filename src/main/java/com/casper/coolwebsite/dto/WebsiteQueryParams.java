@@ -1,11 +1,19 @@
 package com.casper.coolwebsite.dto;
 
-public class WebsiteQueryParams {
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+@ApiModel(description = "文章頁面所需參數，例如:查詢條件、順序...等")
+public class WebsiteQueryParams {
+   @ApiModelProperty("文章名稱查詢")
    private String search;
+   @ApiModelProperty("文章順序")
    private String orderBy;
+   @ApiModelProperty("文章排序")
    private String sort;
+   @ApiModelProperty("文章顯示最大數")
    private Integer limit;
+   @ApiModelProperty("略過幾篇文章")
    private Integer offset;
 
    public Integer getLimit() {

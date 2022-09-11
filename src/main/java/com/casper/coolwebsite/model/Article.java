@@ -1,15 +1,26 @@
 package com.casper.coolwebsite.model;
 
-import java.util.Date;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+import java.util.Date;
+@ApiModel(description = "文章")
 public class Article {
+    @ApiModelProperty("文章編號")
     private Integer articleId;
+    @ApiModelProperty("話題編號")
     private Integer topicId;
+    @ApiModelProperty("標題")
     private String articleTitle;
+    @ApiModelProperty("內容")
     private String articleText;
+    @ApiModelProperty("作者")
     private String articleAuthor;
+    @ApiModelProperty("圖片連結")
     private String articleImageUrl;
+    @ApiModelProperty("創建時間")
     private Date createdDate;
+    @ApiModelProperty("修改時間")
     private Date lastModifiedDate;
 
     public Integer getArticleId() {

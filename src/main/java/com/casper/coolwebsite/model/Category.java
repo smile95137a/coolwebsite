@@ -1,12 +1,20 @@
 package com.casper.coolwebsite.model;
 
-import java.util.Date;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+import java.util.Date;
+@ApiModel(description = "類別")
 public class Category {
+    @ApiModelProperty("類別編號")
     private Integer categoryId;
+    @ApiModelProperty("類別名稱")
     private String categoryName;
+    @ApiModelProperty("描述")
     private String description;
+    @ApiModelProperty("創建時間")
     private Date createdDate;
+    @ApiModelProperty("修改時間")
     private Date lastModifiedDate;
 
     public Integer getCategoryId() {
